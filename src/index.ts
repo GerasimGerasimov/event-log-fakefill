@@ -1,4 +1,5 @@
 console.log('event-log-sqlite started');
+import { createRecordsObject } from './createdata';
 import TDAO  from './DAO';
 import EventsRepositoty from './EventsRepository';
 
@@ -8,6 +9,12 @@ function main(){
   const eventsRepo = new EventsRepositoty(dao);
 
   eventsRepo.createTable();
+  createRecordsObject(15,
+      (date, event)=>{
+        //console.log(JSON.stringify({date, event}, null, 2));
+        eventsRepo.create(date, JSON.stringify(event))
+      }
+  )
 }
 
 main()

@@ -11,22 +11,22 @@ export default class EventsRepositoty {
     const sql = `
     CREATE TABLE IF NOT EXISTS events (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT)`
+      date TEXT NOT NULL,
+      details TEXT NOT NULL)`
     return this.dao.run(sql)
   }
 
-  public create(name: string) {
+  public create(date: string, details: string) {
     return this.dao.run(
-      'INSERT INTO events (name) VALUES (?)',
-      [name]
+      'INSERT INTO events (date, details) VALUES (?, ?)',
+      [date, details]
     )
   }
 
-  public update(events : {id: number, name: string}) {
-    const { id, name } = events;
+  public update(dateID: string, event: string) {
     return this.dao.run(
-      'UPDATE events SET name = ? WHERE is = ?',
-      [name, id]
+      'UPDATE events SET  date = ?, event = ? WHERE date = ?',
+      [dateID, event]
     )
   }
 
