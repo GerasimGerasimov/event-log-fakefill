@@ -1,0 +1,24 @@
+{
+  "name": "event-log-sqlite",
+  "version": "1.0.0",
+  "description": "Журнал событий в базе данных SQLite",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "set APP_DEBUG=true & node dist",
+    "test": "test",
+    "start": "set APP_DEBUG=false & node dist"
+  },
+  "keywords": [],
+  "author": "GerasimGerasimov",
+  "license": "ISC",
+  "dependencies": {
+    "@types/sqlite3": "^3.1.6",
+    "bluebird": "^3.7.2",
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.2"
+  }
+}
