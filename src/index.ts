@@ -9,12 +9,15 @@ function main(){
   const eventsRepo = new EventsRepositoty(dao);
 
   eventsRepo.createTable();
-  createRecordsObject(15,
+  setTimeout(()=>{
+    console.log('start to create records')
+    createRecordsObject(15,
       (date, event)=>{
         //console.log(JSON.stringify({date, event}, null, 2));
         eventsRepo.create(date, JSON.stringify(event))
       }
   )
+  }, 1000);
 }
 
 main()
