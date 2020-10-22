@@ -23,16 +23,23 @@ export default class EventsRepositoty {
     )
   }
 
-  public update(dateID: string, event: string) {
+  public update(id: number, date: string, details: string) {
     return this.dao.run(
-      'UPDATE events SET  date = ?, event = ? WHERE date = ?',
-      [dateID, event]
+      'UPDATE events SET date = ?, details = ? WHERE id = ?',
+      [date, details, id]
     )
   }
 
   public delete(id: number) {
     return this.dao.run(
       'DELETE FROM events WHERE id = ?',
+      [id]
+    )
+  }
+
+  public getByID(id: any): any {
+    return this.dao.get(
+      `SELECT * FROM events WHERE id = ?`,
       [id]
     )
   }

@@ -24,4 +24,27 @@ export default class TDAO {
       }
     })
   }
+
+  public get(sql: string, params: Array<any> = []): any {
+    this.db.get(sql, params, (err, result)=>{
+      if (err) {
+        console.log('Error running sql: ' + sql)
+        console.log(err);
+      } else {
+        console.log(result)
+        return result;
+      }
+    })
+  }
+
+  public all(sql: string, params: Array<any> = []): any {
+    this.db.all(sql, params, (err, rows)=>{
+      if (err) {
+        console.log('Error running sql: '+ sql);
+        console.log(err);
+      } else {
+        return rows;
+      }
+    })
+  }
 }

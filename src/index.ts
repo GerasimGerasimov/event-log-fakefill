@@ -16,7 +16,9 @@ function main(){
         //console.log(JSON.stringify({date, event}, null, 2));
         eventsRepo.create(date, JSON.stringify(event))
       }
-  )
+    );
+    const data: any = eventsRepo.getByID(1)
+    console.log(data)
   }, 1000);
 }
 
