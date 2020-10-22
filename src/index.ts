@@ -11,9 +11,12 @@ async function main(){
   const dao: TDAO = new TDAO('./db/database.sqlite3');
   const eventsRepo = new EventsRepositoty(dao);
   try {
+
     console.log('start to create table')
     await eventsRepo.createTable();
 
+    console.log('row count:', await eventsRepo.getRowCount())
+    
     async function* asyncGenerator(max: number) {
       var i = 0;
       while (i < max) {

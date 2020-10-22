@@ -44,4 +44,9 @@ export default class EventsRepositoty {
     )
   }
 
+  public async getRowCount(): Promise<any> {
+    return await this.dao.get(
+      `SELECT COUNT(*) FROM events`
+    )
+  }
 }
