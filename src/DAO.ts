@@ -13,28 +13,35 @@ export default class TDAO {
     })
   }
 
-  public run(sql: string, params:Array<any> = []): {id: any} | any{
-    this.db.run(sql, params, (err)=>{
-      if (err) {
-        console.log('Error runnig sql' + sql);
-        console.log(err);
-        return (err)
-      } else {
-        return {id:'some ID'}
-      }
+  public async run(sql: string, params:Array<any> = []): Promise<any>{
+    return new Promise((resolve, reject) => {
+      this.db.run(sql, params, (err)=>{
+        if (err) {
+          console.log('Error runnig sql' + sql);
+          console.log(err);
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
     })
+
   }
 
-  public get(sql: string, params: Array<any> = []): any {
-    this.db.get(sql, params, (err, result)=>{
-      if (err) {
-        console.log('Error running sql: ' + sql)
-        console.log(err);
-      } else {
-        console.log(result)
-        return result;
-      }
+  public async get(sql: string, params: Array<any> = []): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.db.get(sql, params, (err, result)=>{
+        if (err) {
+          console.log('Error running sql: ' + sql)
+          console.log(err);
+          reject(err);
+        } else {
+          //console.log(result);
+          resolve(result);
+        }
+      })
     })
+
   }
 
   public all(sql: string, params: Array<any> = []): any {

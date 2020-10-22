@@ -37,8 +37,8 @@ export default class EventsRepositoty {
     )
   }
 
-  public getByID(id: any): any {
-    return this.dao.get(
+  public async getByID(id: any): Promise<any> {
+    return await this.dao.get(
       `SELECT * FROM events WHERE id = ?`,
       [id]
     )

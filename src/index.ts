@@ -4,22 +4,22 @@ import TDAO  from './DAO';
 import EventsRepositoty from './EventsRepository';
 
 
-function main(){
+async function main(){
   const dao: TDAO = new TDAO('./db/database.sqlite3');
   const eventsRepo = new EventsRepositoty(dao);
 
-  eventsRepo.createTable();
-  setTimeout(()=>{
-    console.log('start to create records')
-    createRecordsObject(15,
+  await eventsRepo.createTable();
+  console.log('start to create records')
+  /*
+  createRecordsObject(15,
       (date, event)=>{
-        //console.log(JSON.stringify({date, event}, null, 2));
-        eventsRepo.create(date, JSON.stringify(event))
+        await eventsRepo.create(date, JSON.stringify(event))
       }
-    );
-    const data: any = eventsRepo.getByID(1)
-    console.log(data)
-  }, 1000);
+  )*/
+  console.log('get 1:', await eventsRepo.getByID(1))
+  console.log('get 2:', await eventsRepo.getByID(2))
+  console.log('get 3:', await eventsRepo.getByID(3))
+  console.log('get 4:', await eventsRepo.getByID(4))
 }
 
 main()
