@@ -15,7 +15,7 @@ async function main(){
     console.log('start to create table')
     await eventsRepo.createTable();
 
-    console.log('row count:', await eventsRepo.getRowCount())
+    console.log('start row count:', await eventsRepo.getRowCount())
     
     async function* asyncGenerator(max: number) {
       var i = 0;
@@ -44,6 +44,8 @@ async function main(){
     result.push('get 2:', await eventsRepo.getByID(2))
     result.push('get 3:', await eventsRepo.getByID(3))
     result.push('get 4:', await eventsRepo.getByID(4))
+
+    console.log('end row count:', await eventsRepo.getRowCount())
   } catch(e) {
     console.log('Error :', e)
   }
