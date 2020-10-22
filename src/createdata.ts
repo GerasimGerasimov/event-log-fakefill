@@ -15,7 +15,7 @@ interface IEvent {
     details: IEventDetails;
 }
 
-function createEvent(index: number): IEvent | undefined{
+export function createEvent(index: number): IEvent | undefined{
     //случайное время (нужен формат "2020-09-26T16:18:36.036Z")
     const datetime: any = faker.date.recent(30).toISOString();
     //читаю случайное событие
@@ -31,7 +31,7 @@ function createEvent(index: number): IEvent | undefined{
 }
 
 interface ICallback {
-    (datetime: string, event: {tag: string, details: IEventDetails}): void;
+   (datetime: string, event: {tag: string, details: IEventDetails}): void;
 }
 
 export function createRecordsObject(maxrecords: number, callback?:ICallback): void{
@@ -52,6 +52,7 @@ export function createRecordsObject(maxrecords: number, callback?:ICallback): vo
     }
     return events;
 }
+
 
 export const MaxRecords: number = 2048;
 //export const Events: any = createRecordsObject(MaxRecords);
