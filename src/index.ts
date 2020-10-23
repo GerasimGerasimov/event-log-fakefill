@@ -1,13 +1,12 @@
 console.log('event-log-sqlite started');
 import faker = require('faker');
-import { EventsMap, IEventDetails } from './EventsSourceToMap';
-import { createEvent, createRecordsObject } from './createdata';
+import { EventsMap, IEvent} from './EventsSourceToMap';
+import { createEvent } from './createdata';
 import TDAO  from './DAO';
 import EventsRepositoty from './EventsRepository';
 
 
 async function main(){
-  const result:Array<any>=[];
   const dao: TDAO = new TDAO('./db/database.sqlite3');
   const eventsRepo = new EventsRepositoty(dao);
   try {
@@ -18,50 +17,59 @@ async function main(){
     console.log('start row count:', await eventsRepo.getRowCount())
     
     async function* asyncGenerator(max: number) {
-      var i = 0;
+      let i = 0;
       while (i < max) {
         yield i++;
       }
     }
 
     console.log('start to create records')
-    for await (let i of asyncGenerator(10)) {
-      const event = createEvent(faker.random.number({
+
+    await dao.run('BEGIN TRANSACTION');
+    var index:number = 0;
+    for await (let i of asyncGenerator(2048)) {
+      const eventSource = createEvent(faker.random.number({
         'min': 0,
         'max': EventsMap.size - 1})
         )
-        if (event !== undefined) {
-          const {datetime, tag, details} = {... event}
-          await eventsRepo.create(datetime, JSON.stringify({tag, details}))
-          console.log('create record:' + i)
+        if (eventSource !== undefined) {
+          const {datetime, tag, details} = {... eventSource}
+          const { type, initialValue, comment, todo } = { ... details}
+          const event: IEvent = {
+            date: datetime,
+            type,
+            tag,
+            details : {
+              initialValue,
+              comment,
+              todo
+            }
+          }
+          await eventsRepo.create(event)
+          console.log(`create record: ${i} ${type} ${tag}`)
+          
+          /*index++;
+          if (index === 100) {
+            index = 0;
+            await dao.run('COMMIT TRANSACTION');
+          }
+          */
         } else {
-          console.log(i)
+          console.log(`Error on record ${i}`)
         }
     }
 
-    console.log('start to read records')
-    result.push('get 1:', await eventsRepo.getByID(1))
-    result.push('get 2:', await eventsRepo.getByID(2))
-    result.push('get 3:', await eventsRepo.getByID(3))
-    result.push('get 4:', await eventsRepo.getByID(4))
-
-    console.log('end row count:', await eventsRepo.getRowCount())
   } catch(e) {
     console.log('Error :', e)
   }
-    console.log(JSON.stringify(result, null, 4))
+    await dao.run('COMMIT TRANSACTION');
+    console.log('end row count:', await eventsRepo.getRowCount())
     console.log('event-log-sqlite stoped');
+
 }
 
 main()
 console.log('exit')
-
-  /*
-  createRecordsObject(15,
-      (date, event)=>{
-        await eventsRepo.create(date, JSON.stringify(event))
-      }
-  )*/
 
 /*
 const express = require("express")
