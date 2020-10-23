@@ -21,6 +21,7 @@ CREATE TABLE events (
 ## Данные:
 
 |id   | date                   |type| tag     | details             |
+|---|---|---|---|---|
 |2018 |2020-09-30T09:47:19.534Z| a	|UstMaxFlt|{"initialValue":"0", |
                                               "comment":"...",
                                               "todo":"..."}
