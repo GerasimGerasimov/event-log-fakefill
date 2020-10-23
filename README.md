@@ -10,6 +10,7 @@ npm install sqlite3 --build-from-source=sqlite3
 
 ## Схема таблицы:
 
+```javascript
 CREATE TABLE events (  
     id      INTEGER PRIMARY KEY AUTOINCREMENT,  
     date    TEXT,  
@@ -17,6 +18,7 @@ CREATE TABLE events (
     tag     TEXT,  
     details TEXT  
 );  
+```
 
 ## Данные:
 
