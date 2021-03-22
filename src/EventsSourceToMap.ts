@@ -44,17 +44,6 @@ export interface IEventDetails {
   todo: string;
 }
 
-export interface IEvent {
-  date: string;
-  type: string;
-  tag: string;
-  details: {
-    initialValue: string;
-    comment: string;
-    todo: string;
-  }
-}
-
 interface IEventSourceParameters extends IEventDetails {
   tag: string;
 }

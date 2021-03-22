@@ -1,5 +1,5 @@
 import TDAO from "./DAO";
-import { IEvent } from "./EventsSourceToMap";
+import { IEvent } from "./iDBEvent";
 
 export default class EventsRepositoty {
   private dao: TDAO;
@@ -12,19 +12,21 @@ export default class EventsRepositoty {
     const sql = `
     CREATE TABLE IF NOT EXISTS events (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      utime INTEGER,
       date TEXT,
       type TEXT,
+      trig TEXT,
       tag TEXT,
       details TEXT)`
     return this.dao.run(sql)
   }
 
-  public create(event: IEvent/*date: string, type: string, details: string*/) {
-    const {date, type, tag, details} = {... event}
+  public create(event: IEvent) {
+    const {utime, date, type, trig, tag, details} = {... event}
     const detailsJSON: string = JSON.stringify(details)
     return this.dao.run(
-      'INSERT INTO events (date, type, tag, details) VALUES (?, ?, ?, ?)',
-      [date, type, tag, detailsJSON]
+      'INSERT INTO events (utime, date, type, trig, tag, details) VALUES (?, ?, ?, ?, ?, ?)',
+      [utime, date, type, trig, tag, detailsJSON]
     )
   }
 
